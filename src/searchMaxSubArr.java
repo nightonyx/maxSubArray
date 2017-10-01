@@ -1,25 +1,28 @@
-import java.util.ArrayList;
 import java.util.List;
+
 //by Anton Rossinevich
 public class searchMaxSubArr {
-    static int maxSum = 0;
-    static int currentSum = 0;
+
 
     static List<Integer> searMSArray(List<Integer> inputList) {
-        List<Integer> res = new ArrayList<>();
-        List<Integer> current = new ArrayList<>();
+        int maxSum = 0;
+        int currentSum = 0;
+        int leftInd = 0;
+        int currentLeftInd = 0;
+        int rightInd = -1;
         for (int i = 0; i < inputList.size(); i++) {
-            current.add(inputList.get(i));
-            currentSum += inputList.get(i);
+            int input = inputList.get(i);
+            currentSum += input;
             if (currentSum > maxSum) {
-                res.clear();
-                res.addAll(current);
                 maxSum = currentSum;
-            } else if (currentSum < 0) {
-                current.clear();
+                leftInd = currentLeftInd;
+                rightInd = i;
+            }
+            if (currentSum < 0) {
                 currentSum = 0;
+                currentLeftInd = i + 1;
             }
         }
-        return res;
+        return inputList.subList(leftInd, rightInd + 1);
     }
 }
